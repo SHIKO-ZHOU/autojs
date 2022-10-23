@@ -73,7 +73,7 @@ function find_Punsh(order_Number) {
     switch (order_Number) {
         case 1:
             log("找到到校本化并点击");
-            sleep(100)
+            sleep(1000)
             className("android.widget.TextView").text("校本化").findOne(10000).parent().click()
             break;
         case 2:
@@ -135,10 +135,8 @@ function punch_Form() {
         className("android.widget.Button").text("提 交").click();
         if (className("android.widget.Button").text("转发审批表单").findOne(20000)) {
             var r = http.get("https://sctapi.ftqq.com/" + serverjiang + ".send?title=✅✅✅易班打卡成功✅✅✅");
-            result("✅✅✅易班打卡成功✅✅✅")
         } else {
             var r = http.get("https://sctapi.ftqq.com/" + serverjiang + ".send?title=❌❌❌打卡失败❌❌❌");
-            result("❌❌❌打卡失败❌❌❌")
         }
     } else {
         weixin("未找到上次填写");
