@@ -123,6 +123,7 @@ if (className(deviceSdk).text("是否填入上一次已填写内容？").findOne
     // 单选组
     log("===找体温===");
     routine_Form("android.widget.TextView", "体温", 3000, "正常体温", 1)
+
     log("===找情况==="); //就你特殊
     if (className("android.widget.TextView").text("是否有下列情况（多选）").findOne(2000)) {
         className("android.widget.TextView").text("是否有下列情况（多选）").findOne(2000).parent().click()
@@ -132,6 +133,7 @@ if (className(deviceSdk).text("是否填入上一次已填写内容？").findOne
         sleep(500)
         confirm();
     }
+
     log("===找健康码==");
     routine_Form("android.widget.TextView", "粤康码颜色", 2000, "绿码", 1)
     log("===找心里健康===");
