@@ -55,9 +55,9 @@ function start_Up() {
     sleep(1000)
     log("开始自动签到-打开易班");
     launchApp("易班");
-    log("===11月1日更新,适配早中晚打卡===")
-    log("===11月1日更新,适配早中晚打卡===")
-    log("===11月1日更新,适配早中晚打卡===")
+    log("11月2日更新,修复定位检测")
+    log("11月2日更新,优化签名")
+    log("11月2日更新,移除下滑")
     sleep(1000)
     // 开屏跳过
     log("检测跳过")
@@ -188,21 +188,15 @@ switch (androidsdk) {
         } while (className("android.widget.Image").depth(7).text("图标").exists());
         break;
 }
-sleep(3000)
+sleep(1000)
 
 // 滑动
-swipe(540, 800, 540, 10, 500);
+// swipe(device.width / 1.2, device.height / 2.3, device.width / 1.2, 0, 300);
+
 
 sleep(1000)
 log("开始签名")
-switch (androidsdk) {
-    case 12:
-        swipe(460, 1400, 465, 1405, 500)
-        break;
-    case 10:
-        swipe(580, 1600, 585, 1605, 500)
-        break;
-}
+className("android.widget.Image").clickable(true).depth(6).indexInParent(0).findOne(5000).click()
 sleep(1000)
 
 
