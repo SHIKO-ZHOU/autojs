@@ -19,37 +19,10 @@ switch (device.sdkInt) {
 }
 
 
-
-function killApp(易班) { //填写包名或app名称都可以
-    var name = getPackageName(appName); //通过app名称获取包名
-    if (!name) { //如果无法获取到包名，判断是否填写的就是包名
-        if (getAppName(appName)) {
-            name = appName; //如果填写的就是包名，将包名赋值给变量
-        } else {
-            return false;
-        }
-    }
-
-    app.openAppSetting(name); //通过包名打开应用的详情页(设置页)
-    text(app.getAppName(name)).waitFor(); //通过包名获取已安装的应用名称，判断是否已经跳转至该app的应用设置界面
-    sleep(500); //稍微休息一下，不然看不到运行过程，自己用时可以删除这行
-    let is_sure = textMatches(/(.*强.*|.*停.*|.*结.*)/).findOne(); //在app的应用设置界面找寻包含“强”，“停”，“结”，“行”的控件
-    //特别注意，应用设置界面可能存在并非关闭该app的控件，但是包含上述字样的控件，如果某个控件包含名称“行”字
-    //textMatches(/(.*强.*|.*停.*|.*结.*|.*行.*)/)改为textMatches(/(.*强.*|.*停.*|.*结.*)/)
-    //或者结束应用的控件名为“结束运行”直接将textMatches(/(.*强.*|.*停.*|.*结.*|.*行.*)/)改为text("结束运行")
-
-
-    if (is_sure.enabled()) { //判断控件是否已启用（想要关闭的app是否运行）
-        is_sure.parent().click(); //结束应用的控件如果无法点击，需要在布局中找寻它的父控件，如果还无法点击，再上一级控件，本案例就是控件无法点击
-        textMatches(/(.*确.*|.*定.*)/).findOne().click(); //需找包含“确”，“定”的控件
-        log(app.getAppName(name) + "应用已被关闭");
-        sleep(1000);
-        back();
-    } else {
-        log(app.getAppName(name) + "应用不能被正常关闭或不在后台运行");
-        back();
-    }
-}
+//关闭指定包名的应用
+function killApp(packageName) {
+    shell('am force-stop ' + packageName, true);
+};
 
 
 
@@ -78,7 +51,7 @@ function weixin(weiXin_Text) {
 function start_Up() {
     console.show()
     log("销毁易班")
-    killApp("微信");
+    killApp("com.yiban.app")
     sleep(1000)
     log("开始自动签到-打开易班");
     launchApp("易班");
@@ -110,7 +83,7 @@ function start_Up() {
 function into_Form() {
     if (className("android.widget.TextView").text("校本化").findOne(60000)) {
         log("找校本化并点击");
-        sleep(5000)
+        sleep(3000)
         className("android.widget.TextView").text("校本化").findOne(1000).parent().click()
 
         log("找任务反馈并点击")
@@ -204,27 +177,27 @@ switch (androidsdk) {
     case 12:
         // 判断是否定位
         do {
-            className("android.widget.Image").depth(7).text("图标").clickable(false).findOne(3000).parent().click()
+            className("android.widget.Image").depth(7).text("图标").findOne(3000).parent().click()
             sleep(3000)
-        } while (className("android.widget.Image").depth(7).text("图标").clickable(false).findOne(3000))
+        } while (className("android.widget.Image").depth(7).text("图标").exists())
         break;
     case 10:
         do {
             className("android.widget.Image").depth(7).text("图标").findOne(3000).click()
             sleep(3000)
-        } while (className("android.widget.Image").depth(7).text("图标").findOne(3000));
+        } while (className("android.widget.Image").depth(7).text("图标").exists());
         break;
 }
 sleep(3000)
 
 // 滑动
-swipe(540, 750, 540, 200, 500);
+swipe(540, 800, 540, 10, 500);
 
 sleep(1000)
 log("开始签名")
 switch (androidsdk) {
     case 12:
-        swipe(460, 1300, 465, 1305, 500)
+        swipe(460, 1400, 465, 1405, 500)
         break;
     case 10:
         swipe(580, 1600, 585, 1605, 500)
