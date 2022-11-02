@@ -207,4 +207,4 @@ if (className("android.widget.Button").text("转发审批表单").findOne(20000)
 } else {
     weixin("未找到打卡结果");
 }
-exit()
+killApp("com.example.script1666410869226")
