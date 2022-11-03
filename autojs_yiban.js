@@ -69,7 +69,7 @@ function start_Up() {
     // 判断3秒公告
     sleep(1000)
     log("判断是否有公告");
-    if (id("iv_close").findOne(3000)) {
+    if (id("iv_close").findOne(5000)) {
         id("iv_close").click()
         sleep(500)
         id("iv_close").click()
@@ -81,19 +81,25 @@ function start_Up() {
 
 // 进入表单
 function into_Form() {
-    if (className("android.widget.TextView").text("校本化").findOne(60000)) {
+    if (className("android.widget.TextView").text("校本化").findOne(30000)) {
         log("找校本化并点击");
-        sleep(3000)
         className("android.widget.TextView").text("校本化").findOne(1000).parent().click()
 
         log("找任务反馈并点击")
-        className(deviceSdk).text("任务反馈").findOne(60000).click()
+        className(deviceSdk).text("任务反馈").findOne(30000).click()
 
         log("找健康打卡并点击")
-        className("android.widget.TextView").text("未反馈").findOne(60000).parent().click()
+
+        if (className("android.widget.TextView").text("未反馈").findOne(30000)) {
+            className("android.widget.TextView").text("未反馈").findOne(30000).parent().click()
+        } else {
+            weixin("未找打卡表单");
+            sleep(1000)
+            killApp("com.example.script1666410869226");
+        }
 
         log("找反馈并点击");
-        className("android.widget.Button").text("反 馈").findOne(60000).click();
+        className("android.widget.Button").text("反 馈").findOne(30000).click();
     } else {
         weixin("未找到入口")
     }
