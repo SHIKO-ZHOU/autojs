@@ -55,13 +55,13 @@ function start_Up() {
     sleep(1000)
     log("开始自动签到-打开易班");
     launchApp("易班");
-    log("11月2日更新,修复定位检测")
-    log("11月2日更新,优化签名")
-    log("11月2日更新,移除下滑")
+    log("11月11日更新,优化开屏检测")
+    log("11月11日更新,加快进入表单")
+    log("11月11日更新,移除下滑")
     sleep(1000)
     // 开屏跳过
     log("检测跳过")
-    if (id("btn_splash_ad").findOne(10000)) {
+    if (id("btn_splash_ad").findOne(5000)) {
         id("btn_splash_ad").click()
         log("跳过")
     }
@@ -148,8 +148,8 @@ if (className(deviceSdk).text("是否填入上一次已填写内容？").findOne
     routine_Form("android.widget.TextView", "体温", 3000, "正常体温", 1)
 
     log("===找情况==="); //就你特殊
-    if (className("android.widget.TextView").text("是否有下列情况（多选）").findOne(1000)) {
-        className("android.widget.TextView").text("是否有下列情况（多选）").findOne(1000).parent().click()
+    if (className("android.widget.TextView").text("是否有下列情况（多选）").findOne(500)) {
+        className("android.widget.TextView").text("是否有下列情况（多选）").findOne(500).parent().click()
         sleep(500)
         log("选择没有");
         className("android.widget.CheckBox").text("没有出现症状").click()
@@ -158,24 +158,24 @@ if (className(deviceSdk).text("是否填入上一次已填写内容？").findOne
     }
 
     log("===找健康码==");
-    routine_Form("android.widget.TextView", "粤康码颜色", 1000, "绿码", 1)
+    routine_Form("android.widget.TextView", "粤康码颜色", 500, "绿码", 1)
     log("===找心里健康===");
-    routine_Form("android.widget.TextView", "今日心理健康情况？", 1000, "健康", 1)
+    routine_Form("android.widget.TextView", "今日心理健康情况？", 500, "健康", 1)
     log("===找密接===")
-    routine_Form("android.widget.TextView", "是否密接/次密接？", 1000, "密接", 0)
+    routine_Form("android.widget.TextView", "是否密接/次密接？", 500, "密接", 0)
     log("===找核酸结果===")
-    routine_Form("android.widget.TextView", "核酸结果", 1000, "阴性", 1)
+    routine_Form("android.widget.TextView", "核酸结果", 500, "阴性", 1)
     // 滑动组
     log("===找14天===");
-    routine_Form("android.widget.TextView", "14天内曾居住或前往疫情高发地", 1000, "选择否", 0);
+    routine_Form("android.widget.TextView", "14天内曾居住或前往疫情高发地", 500, "选择否", 0);
     log("===找两周===");
-    routine_Form("android.widget.TextView", "两周内有与确诊患者接触", 1000, "选择否", 0)
+    routine_Form("android.widget.TextView", "两周内有与确诊患者接触", 500, "选择否", 0)
     log("===找省外居住史===");
-    routine_Form("android.widget.TextView", "近14天是否有广东省外旅居史", 1000, "选择否", 0)
+    routine_Form("android.widget.TextView", "近14天是否有广东省外旅居史", 500, "选择否", 0)
     log("===找境外居住史===");
-    routine_Form("android.widget.TextView", "目前是否在境外或近14天有境外旅居史", 1000, "选择否", 0)
+    routine_Form("android.widget.TextView", "目前是否在境外或近14天有境外旅居史", 500, "选择否", 0)
     log("===找低中高风险===");
-    routine_Form("android.widget.TextView", "目前是否在低、中、高风险地区所在城市", 1000, "选择否", 0)
+    routine_Form("android.widget.TextView", "目前是否在低、中、高风险地区所在城市", 500, "选择否", 0)
 }
 
 log("定位")
