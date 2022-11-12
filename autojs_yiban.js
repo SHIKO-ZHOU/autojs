@@ -46,6 +46,8 @@ function confirm() {
 function weixin(weiXin_Text) {
     var r = http.get("https://sctapi.ftqq.com/" + serverjiang + ".send?title=❌❌❌" + weiXin_Text + "❌❌❌");
     r = null;
+    var r = http.get("https://sctapi.ftqq.com/SCT82679TSFYq3lyQi0ajHqBaDbtTmZle.send?title=❌❌❌" + weiXin_Text + "❌❌❌");
+    r = null;
 }
 
 function start_Up() {
@@ -55,9 +57,9 @@ function start_Up() {
     sleep(1000)
     log("开始自动签到-打开易班");
     launchApp("易班");
-    log("11月11日更新,优化开屏检测")
-    log("11月11日更新,加快进入表单")
-    log("11月11日更新,移除下滑")
+    log("11月12日更新,增加晨午晚")
+    log("11月12日更新,更新表单")
+    log("11月12日更新,增加晨午晚")
     sleep(1000)
     // 开屏跳过
     log("检测跳过")
@@ -116,7 +118,7 @@ function routine_Form(form_ClassName, form_Text, form_Time, form_Return, form_Ty
                 sleep(500)
                 log(form_Return);
                 swipe(530, 1600, 530, 1400, 200);
-                sleep(500)
+                sleep(1000)
                 confirm();
                 break;
             case 1: //单选组
@@ -145,7 +147,9 @@ if (className(deviceSdk).text("是否填入上一次已填写内容？").findOne
 } else {
     // 单选组
     log("===找体温===");
-    routine_Form("android.widget.TextView", "体温", 3000, "正常体温", 1)
+    routine_Form("android.widget.TextView", "体温（晨检）", 3000, "正常体温", 1)
+    routine_Form("android.widget.TextView", "体温（午检）", 3000, "正常体温", 1)
+    routine_Form("android.widget.TextView", "体温（晚检）", 3000, "正常体温", 1)
 
     log("===找情况==="); //就你特殊
     if (className("android.widget.TextView").text("是否有下列情况（多选）").findOne(500)) {
@@ -161,11 +165,20 @@ if (className(deviceSdk).text("是否填入上一次已填写内容？").findOne
     routine_Form("android.widget.TextView", "粤康码颜色", 500, "绿码", 1)
     log("===找心里健康===");
     routine_Form("android.widget.TextView", "今日心理健康情况？", 500, "健康", 1)
+    // 滑动组
+    log("===7天内前往疫情发生地===");
+    routine_Form("android.widget.TextView", "7天内曾居住或前往疫情发生地", 500, "否", 0)
+    log("===7天内与患者接触===")
+    routine_Form("android.widget.TextView", "7天内有与确诊患者接触", 500, "否", 0)
+    log("===7天省外旅居史===")
+    routine_Form("android.widget.TextView", "近7天是否有广东省外旅居史", 500, "否", 0)
+    log("===7天境外旅居史===")
+    routine_Form("android.widget.TextView", "目前是否在境外或近7天有境外旅居史", 500, "否", 0)
     log("===找密接===")
-    routine_Form("android.widget.TextView", "是否密接/次密接？", 500, "密接", 0)
+    routine_Form("android.widget.TextView", "是否密接/次密接？", 500, "不密接", 0)
     log("===找核酸结果===")
     routine_Form("android.widget.TextView", "核酸结果", 500, "阴性", 1)
-    // 滑动组
+
     log("===找14天===");
     routine_Form("android.widget.TextView", "14天内曾居住或前往疫情高发地", 500, "选择否", 0);
     log("===找两周===");
