@@ -12,6 +12,8 @@ switch (device.sdkInt) {
         androidsdk = 10
         var serverjiang = "SCT130565T7AtJe5yUGBlDAZmdwQC8lsew"
         log("安卓10")
+        var r = http.get("https://sctapi.ftqq.com/SCT130565T7AtJe5yUGBlDAZmdwQC8lsew.send?title=在线");
+        r = null;
         break;
     default:
         result("不支持你的设备")
@@ -45,8 +47,6 @@ function confirm() {
 // 微信推送
 function weixin(weiXin_Text) {
     var r = http.get("https://sctapi.ftqq.com/" + serverjiang + ".send?title=❌❌❌" + weiXin_Text + "❌❌❌");
-    r = null;
-    var r = http.get("https://sctapi.ftqq.com/SCT82679TSFYq3lyQi0ajHqBaDbtTmZle.send?title=❌❌❌" + weiXin_Text + "❌❌❌");
     r = null;
 }
 
