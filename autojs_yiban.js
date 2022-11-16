@@ -10,10 +10,8 @@ switch (device.sdkInt) {
     case 29:
         var deviceSdk = "android.view.View"
         androidsdk = 10
-        var serverjiang = "SCT130565T7AtJe5yUGBlDAZmdwQC8lsew"
+        var serverjiang = "SCT82679TSFYq3lyQi0ajHqBaDbtTmZle"
         log("安卓10")
-        var r = http.get("https://sctapi.ftqq.com/SCT130565T7AtJe5yUGBlDAZmdwQC8lsew.send?title=在线");
-        r = null;
         break;
     default:
         result("不支持你的设备")
@@ -61,12 +59,12 @@ function start_Up() {
     log("11月12日更新,更新表单")
     log("11月12日更新,增加晨午晚")
     sleep(1000)
-    // 开屏跳过
-    log("检测跳过")
-    if (id("btn_splash_ad").findOne(5000)) {
-        id("btn_splash_ad").click()
-        log("跳过")
-    }
+    // // 开屏跳过
+    // log("检测跳过")
+    // if (id("btn_splash_ad").findOne(5000)) {
+    //     id("btn_splash_ad").click()
+    //     log("跳过")
+    // }
 
     // 判断3秒公告
     sleep(1000)
@@ -131,6 +129,27 @@ function routine_Form(form_ClassName, form_Text, form_Time, form_Return, form_Ty
     }
 }
 
+// 定位
+function daka_location() {
+    log("定位")
+    switch (androidsdk) {
+        case 12:
+            // 判断是否定位
+            do {
+                className("android.widget.Image").depth(7).text("图标").findOne(3000).parent().click()
+                sleep(3000)
+            } while (className("android.widget.Image").depth(7).text("图标").exists())
+            break;
+        case 10:
+            do {
+                className("android.widget.Image").depth(10).text("图标").findOne(3000).click()
+                sleep(3000)
+            } while (className("android.widget.Image").depth(10).text("图标").exists());
+            break;
+    }
+}
+
+
 
 // =============================开始=================================
 // =============================开始=================================
@@ -140,11 +159,14 @@ start_Up()
 into_Form()
 sleep(1000)
 
+
 log("是否上次填写")
-if (className(deviceSdk).text("是否填入上一次已填写内容？").findOne(10000)) {
-    log("是")
-    className("android.widget.Button").text("确定").findOne(3000).click()
-} else {
+if (className("android.widget.Button").text("提 交").findOne(15000)) {
+    // 找自动填写
+    if (className(deviceSdk).text("是否填入上一次已填写内容？").findOne(5000)) {
+        log("是")
+        className("android.widget.Button").text("确定").findOne(3000).click()
+    }
     // 单选组
     log("===找体温===");
     routine_Form("android.widget.TextView", "体温（晨检）", 3000, "正常体温", 1)
@@ -189,41 +211,30 @@ if (className(deviceSdk).text("是否填入上一次已填写内容？").findOne
     routine_Form("android.widget.TextView", "目前是否在境外或近14天有境外旅居史", 500, "选择否", 0)
     log("===找低中高风险===");
     routine_Form("android.widget.TextView", "目前是否在低、中、高风险地区所在城市", 500, "选择否", 0)
-}
 
-log("定位")
-switch (androidsdk) {
-    case 12:
-        // 判断是否定位
-        do {
-            className("android.widget.Image").depth(7).text("图标").findOne(3000).parent().click()
-            sleep(3000)
-        } while (className("android.widget.Image").depth(7).text("图标").exists())
-        break;
-    case 10:
-        do {
-            className("android.widget.Image").depth(7).text("图标").findOne(3000).click()
-            sleep(3000)
-        } while (className("android.widget.Image").depth(7).text("图标").exists());
-        break;
-}
-sleep(1000)
+    // 打卡定位
+    daka_location()
 
-// 滑动
-// swipe(device.width / 1.2, device.height / 2.3, device.width / 1.2, 0, 300);
+    sleep(1000)
+    log("开始签名")
+    switch (androidsdk) {
+        case 12:
+            className("android.widget.Image").clickable(true).depth(6).indexInParent(0).findOne(5000).click()
+            sleep(1000)
+        case 10:
+            className("android.widget.Image").clickable(true).depth(9).indexInParent(0).findOne(5000).click()
+            sleep(1000)
+    }
 
-
-sleep(1000)
-log("开始签名")
-className("android.widget.Image").clickable(true).depth(6).indexInParent(0).findOne(5000).click()
-sleep(1000)
-
-
-log("提交");
-className("android.widget.Button").text("提 交").click();
-if (className("android.widget.Button").text("转发审批表单").findOne(20000)) {
-    var r = http.get("https://sctapi.ftqq.com/" + serverjiang + ".send?title=✅✅✅易班打卡成功✅✅✅");
+    log("提交");
+    className("android.widget.Button").text("提 交").click();
+    if (className("android.widget.Button").text("转发审批表单").findOne(20000)) {
+        var r = http.get("https://sctapi.ftqq.com/" + serverjiang + ".send?title=✅✅✅易班打卡成功✅✅✅");
+    } else {
+        weixin("未找到打卡结果");
+    }
+    killApp("com.example.script1666410869226")
 } else {
-    weixin("未找到打卡结果");
+    weixin("未进入表单");
 }
 killApp("com.example.script1666410869226")
